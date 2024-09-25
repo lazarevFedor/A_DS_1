@@ -24,11 +24,24 @@ public:
     bool empty();
 
     void erase(int index);
+
+    Type* getAt(short index);
+
+    void swap(short index1, short index2);
 };
 
 
-
 //Methods
+template<typename Type> void Array<Type>::swap(short index1, short index2) {
+    std::swap(array[index1], array[index2]);
+}
+
+
+template<typename Type> Type* Array<Type>::getAt(short index) {
+    return array+index;
+}
+
+
 template<typename Type> void Array<Type>::erase(int index) {
     if(index >= currentSize || index < 0) return;
     capacity--;

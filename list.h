@@ -1,6 +1,6 @@
 #ifndef A_DS_LIST_H
 #define A_DS_LIST_H
-#include <iostream>
+
 
 
 //Node class
@@ -25,9 +25,9 @@ public:
 
     void pushBack(Type data);
 
-    void popFront(Type data);
+    void popFront();
 
-    void popBack(Type data);
+    void popBack();
 
     ListNode<Type>* getAt(short index);
 
@@ -86,7 +86,7 @@ template<typename Type> void LinkedList<Type>::pushBack(Type data) {
 }
 
 
-template<typename Type> void LinkedList<Type>::popFront(Type data) {
+template<typename Type> void LinkedList<Type>::popFront() {
     if(head == nullptr) return;
     ListNode<Type>* ptr = head->next;
     if(ptr != nullptr){
@@ -99,7 +99,7 @@ template<typename Type> void LinkedList<Type>::popFront(Type data) {
 }
 
 
-template<typename Type> void LinkedList<Type>::popBack(Type data) {
+template<typename Type> void LinkedList<Type>::popBack() {
     if(tail == nullptr) return;
     ListNode<Type>* ptr = tail->prev;
     if(ptr != nullptr){
@@ -209,13 +209,6 @@ template<typename Type> void LinkedList<Type>::swap(short index1, short index2) 
 }
 
 
-void clearStream() {
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin.sync();
-}
-
-
 template<typename Type> void LinkedList<Type>::print() {
     std::cout << "[ ";
     for (ListNode<Type>*ptr = head; ptr != nullptr; ptr = ptr->next){
@@ -233,7 +226,6 @@ template<typename Type> void LinkedList<Type>::fill() {
             break;
         }
     }
-    clearStream();
 }
 
 
