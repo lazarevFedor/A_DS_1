@@ -9,6 +9,7 @@ std::string SortStation::getStr() {
     return input;
 }
 
+
 int SortStation::priority(char c) {
     switch (c){
         case '+':
@@ -28,6 +29,7 @@ int SortStation::priority(char c) {
             else return -2;
     }
 }
+
 
 std::string SortStation::toRPN(std::string &inputStr) {
     auto* pStack = new Stack<string>();
@@ -53,7 +55,7 @@ std::string SortStation::toRPN(std::string &inputStr) {
                 }
                 else{
                     while(pStack->head->data != "("){
-                        output.push_back(pStack->head->data[0]);
+                        output += pStack->head->data;
                         output.push_back(' ');
                         pStack->popFront();
                     }
@@ -71,11 +73,11 @@ std::string SortStation::toRPN(std::string &inputStr) {
                 }
                 else{
                     while(pStack->head != nullptr && pStack->head->priority >= priority(inputStr[i])){
-                        output.push_back(pStack->head->data[0]);
+                        output += pStack->head->data;
                         output.push_back(' ');
                         pStack->popFront();
                     }
-                    pStack->popFront();
+                    pStack->pushFront(inputStr.substr(i,1), priority(inputStr[i]));
                 }
                 break;
             case 10:
@@ -91,7 +93,7 @@ std::string SortStation::toRPN(std::string &inputStr) {
         current.clear();
     }
     while(pStack->head != nullptr){
-        output.push_back(pStack->head->data[0]);
+        output += pStack->head->data;
         output.push_back(' ');
         pStack->popFront();
     }

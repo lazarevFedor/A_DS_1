@@ -16,6 +16,7 @@ void application::showMenu() {
     "4) Выход\n--> ";
 }
 
+
 void application::interactionMenu() {
     char choise;
     while(true){
@@ -46,6 +47,7 @@ void application::interactionMenu() {
     }
 }
 
+
 void application::editMenu() {
     cout << "1) Вставить элемент\n" <<
          "2) Удалить элемент по индексу\n" <<
@@ -53,6 +55,7 @@ void application::editMenu() {
          "4) Получить элемент по индексу\n" <<
          "5) Назад\n--> ";
 }
+
 
 void application::arrayApplication() {
     char choise;
@@ -103,6 +106,7 @@ void application::arrayApplication() {
     }
 }
 
+
 void application::listApplication() {
     char choise;
     auto* pList = new LinkedList<int>();
@@ -151,7 +155,29 @@ void application::listApplication() {
     }
 }
 
+
 void application::stationApplication() {
     SortStation station;
-    clearStream();
+    string input;
+    char choise;
+
+    while(true){
+        cout << "1) Преобразовать выражение\n" <<
+             "2) Назад\n--> ";
+        cin >> choise;
+        switch (choise) {
+            case '1':
+                cout << "\nВведите выражение: ";
+                clearStream();
+                input = station.getStr();
+                cout << "Выражение в обратной польской нотации: " << station.toRPN(input);
+                break;
+            case '2':
+                return;
+            default:
+                cout << "Неверный ввод";
+                break;
+        }
+        cout << "\n";
+    }
 }

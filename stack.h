@@ -1,6 +1,7 @@
 #ifndef A_DS_STACK_H
 #define A_DS_STACK_H
 
+//StackNode class
 template<typename Type> class StackNode {
 public:
     Type data;
@@ -19,8 +20,7 @@ template<typename Type> StackNode<Type>::StackNode(Type &inputData, int inputPri
 }
 
 
-
-
+//Stack class
 template<typename Type> class Stack {
 public:
     StackNode<Type>* head, * tail;
@@ -34,8 +34,7 @@ public:
 
 
 //Stack constructor
-template<typename Type>
-Stack<Type>::Stack(): head(nullptr), tail(nullptr){}
+template<typename Type> Stack<Type>::Stack(): head(nullptr), tail(nullptr){}
 
 
 //Stack methods
@@ -45,6 +44,7 @@ template<typename Type> void Stack<Type>::pushFront(Type data, int inputPriority
     head = node;
     if (tail == nullptr) tail = node;
 }
+
 
 template<typename Type> void Stack<Type>::popFront() {
     if (head == nullptr) return;
