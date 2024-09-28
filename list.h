@@ -19,6 +19,8 @@ template <typename Type> class LinkedList {
 public:
     LinkedList();
 
+    ~LinkedList();
+
     short length();
 
     void pushFront(Type data);
@@ -43,18 +45,26 @@ public:
 };
 
 
+//ListNode constructor
 template<typename Type> ListNode<Type>::ListNode(Type inputData) {
     data = inputData;
     prev = next = nullptr;
 }
 
 
+//LinkedList constructor and destructor
 template<typename Type> LinkedList<Type>::LinkedList() {
     head = tail = nullptr;
     len = 0;
 }
 
 
+template<typename Type> LinkedList<Type>::~LinkedList() {
+    while(head != nullptr) popBack();
+}
+
+
+//LinkedList methods
 template<typename Type> short LinkedList<Type>::length() {
     return len;
 }

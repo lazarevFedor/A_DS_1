@@ -24,4 +24,5 @@ public:
 };
 
 
-#endif //A_DS_APPLICATION_H
+
+#endif

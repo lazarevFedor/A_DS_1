@@ -2,14 +2,20 @@
 using namespace std;
 
 
-void clearStream() {
+inline void clearStream() {
     cin.clear();
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cin.sync();
 }
 
 
-void application::showMenu() {
+inline void clear() {
+    // CSI[2J clears screen, CSI[H moves the cursor to top-left corner
+    std::cout << "\x1B[2J\x1B[H";
+}
+
+
+inline void application::showMenu() {
     cout << "1) Двусвязный список\n" <<
     "2) Динамический массив\n" <<
     "3) Сортировочная станция\n" <<
@@ -24,31 +30,31 @@ void application::interactionMenu() {
         cin >> choise;
         switch(choise) {
             case '1':
-                system("cls");
+                clear();
                 listApplication();
-                system("cls");
+                clear();
                 break;
             case '2':
-                system("cls");
+                clear();
                 arrayApplication();
-                system("cls");
+                clear();
                 break;
             case '3':
-                system("cls");
+                clear();
                 stationApplication();
-                system("cls");
+                clear();
                 break;
             case '4':
                 exit(0);
             default:
-                system("cls");
+                clear();
                 break;
         }
     }
 }
 
 
-void application::editMenu() {
+inline void application::editMenu() {
     cout << "1) Вставить элемент\n" <<
          "2) Удалить элемент по индексу\n" <<
          "3) Обмен элементов\n" <<

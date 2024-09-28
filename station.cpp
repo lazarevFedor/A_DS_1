@@ -1,5 +1,4 @@
 #include "station.h"
-
 using namespace std;
 
 
@@ -97,5 +96,6 @@ std::string SortStation::toRPN(std::string &inputStr) {
         output.push_back(' ');
         pStack->popFront();
     }
+    delete pStack;
     return output;
 }

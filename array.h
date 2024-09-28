@@ -11,6 +11,8 @@ public:
 
     Array(int inputSize);
 
+    ~Array();
+
     void resize(int inputSize);
 
     void pushBack(Type data);
@@ -160,7 +162,7 @@ template<typename Type> void Array<Type>::resize(int inputSize) {
 }
 
 
-//Constructors
+//Constructors and destructor
 template<typename Type> Array<Type>::Array() {
     currentSize = 0;
     capacity = 5;
@@ -174,6 +176,12 @@ template<typename Type> Array<Type>::Array(int inputSize) {
     }
     capacity = inputSize;
     array = new Type[capacity];
+}
+
+
+template<typename Type> Array<Type>::~Array() {
+    delete []array;
+    array = nullptr;
 }
 
 
