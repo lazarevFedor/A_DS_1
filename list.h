@@ -40,8 +40,6 @@ public:
     void swap(short index1, short index2);
 
     void print();
-
-    void fill();
 };
 
 
@@ -225,17 +223,6 @@ template<typename Type> void LinkedList<Type>::print() {
         std::cout << ptr->data << " ";
     }
     std::cout << "]";
-}
-
-
-template<typename Type> void LinkedList<Type>::fill() {
-    Type value;
-    while (std::cin >> value) {
-        this->pushBack(value);
-        if (std::cin.peek() == '\n') {
-            break;
-        }
-    }
 }
 
 

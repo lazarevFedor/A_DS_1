@@ -2,6 +2,8 @@
 #define A_DS_APPLICATION_H
 
 #include <iostream>
+#include <ctime>
+#include <fstream>
 #include "list.h"
 #include "array.h"
 #include "station.h"
@@ -15,6 +17,8 @@ public:
     void interactionMenu();
 
     void editMenu();
+
+    void fillMenu();
 
     void arrayApplication();
 
