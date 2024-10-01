@@ -35,11 +35,13 @@ public:
 
 //Methods
 template<typename Type> void Array<Type>::swap(short index1, short index2) {
+    if(index1 < 0 || index2 >= currentSize) return;
     std::swap(array[index1], array[index2]);
 }
 
 
 template<typename Type> Type* Array<Type>::getAt(short index) {
+    if(index < 0 || index >= currentSize) return nullptr;
     return array+index;
 }
 
@@ -96,6 +98,7 @@ template<typename Type> void Array<Type>::insert(int index, Type data) {
 
 
 template<typename Type> void Array<Type>::print() {
+    if (currentSize == 0) return;
     std::cout << "[ ";
     for (int i = 0; i < currentSize; i++){
         std::cout << *(array + i) << " ";

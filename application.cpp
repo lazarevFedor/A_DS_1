@@ -76,7 +76,7 @@ int randint(){
 }
 
 
-void fill(Array<int>* &pArray, char &choise, ifstream &fin){
+bool fill(Array<int>* &pArray, char &choise, ifstream &fin){
     int number;
     switch (choise) {
         case '1':
@@ -93,10 +93,15 @@ void fill(Array<int>* &pArray, char &choise, ifstream &fin){
             fin.open("C:\\Users\\fedos\\CLionProjects\\A&DS\\dataStruct.txt");
             if (!fin.is_open()) {
                 cout << "\nОшибка открытия файла!!!\n";
-                return;
+                return false;
             }
             while (!fin.eof()) {
                 fin >> number;
+                if(fin.fail()){
+                    fin.close();
+                    cout << "\nНеверный ввод";
+                    return false;
+                }
                 pArray->pushBack(number);
                 fin.get();
             }
@@ -112,12 +117,13 @@ void fill(Array<int>* &pArray, char &choise, ifstream &fin){
             break;
         default:
             cout << "Неверный ввод\n";
-            break;
+            return false;
     }
+    return true;
 }
 
 
-void fill(LinkedList<int>* &pList, char &choise, ifstream &fin){
+bool fill(LinkedList<int>* &pList, char &choise, ifstream &fin){
     int number;
     switch (choise) {
         case '1':
@@ -134,10 +140,15 @@ void fill(LinkedList<int>* &pList, char &choise, ifstream &fin){
             fin.open("C:\\Users\\fedos\\CLionProjects\\A&DS\\dataStruct.txt");
             if (!fin.is_open()) {
                 cout << "\nОшибка открытия файла!!!\n";
-                return;
+                return false;
             }
             while (!fin.eof()) {
                 fin >> number;
+                if(fin.fail()){
+                    fin.close();
+                    cout << "\nНеверный ввод";
+                    return false;
+                }
                 pList->pushBack(number);
                 fin.get();
             }
@@ -148,14 +159,20 @@ void fill(LinkedList<int>* &pList, char &choise, ifstream &fin){
             int len;
             cout << "\nВведите длину: ";
             cin >> len;
+            if(cin.fail()){
+                clearStream();
+                cout << "\nНеверный ввод";
+                return false;
+            }
             for (int i = 0; i < len; i++){
                 pList->pushBack(randint());
             }
             break;
         default:
             cout << "Неверный ввод\n";
-            break;
+            return false;
     }
+    return true;
 }
 
 
@@ -178,35 +195,70 @@ void application::arrayApplication() {
                     delete pArray;
                     pArray = new Array<int>();
                 }
-                fill(pArray, choise, fin);
-                clear();
-                pArray->print();
+                if(fill(pArray, choise, fin)){
+                    clear();
+                    pArray->print();
+                }
                 break;
             case '2':
                 cout << "\n\nВведите индекс: ";
                 cin >> index1;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 cout << "Введите значение: ";
                 cin >> value;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 pArray->insert(index1, value);
                 pArray->print();
                 break;
             case '3':
                 cout << "\n\nВведите индекс: ";
                 cin >> index1;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 pArray->erase(index1);
                 pArray->print();
                 break;
             case '4':
                 cout << "\n\nВведите первый индекс: ";
                 cin >> index1;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 cout << "\n\nВведите второй индекс: ";
                 cin >> index2;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 pArray->swap(index1, index2);
                 pArray->print();
                 break;
             case '5':
                 cout << "\n\nВведите индекс: ";
                 cin >> index1;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
+                if((pArray->getAt(index1)) == nullptr){
+                    cout << "\nЭлемент не найден.";
+                    break;
+                }
                 cout << "\nЭлемент: " << *(pArray->getAt(index1));
                 break;
             case '6':
@@ -236,39 +288,74 @@ void application::listApplication() {
             case '1':
                 fillMenu();
                 cin >> choise;
-                if(pList->getAt(0) == nullptr){
+                if(pList->getAt(0) != nullptr){
                     delete pList;
                     pList = new LinkedList<int>();
                 }
-                fill(pList, choise, fin);
-                clear();
-                pList->print();
+                if(fill(pList, choise, fin)){
+                    clear();
+                    pList->print();
+                }
                 break;
             case '2':
                 cout << "\n\nВведите индекс: ";
                 cin >> index1;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 cout << "Введите значение: ";
                 cin >> value;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 pList->insert(index1, value);
                 pList->print();
                 break;
             case '3':
                 cout << "\n\nВведите индекс: ";
                 cin >> index1;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 pList->erase(index1);
                 pList->print();
                 break;
             case '4':
                 cout << "\n\nВведите первый индекс: ";
                 cin >> index1;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 cout << "\n\nВведите второй индекс: ";
                 cin >> index2;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
                 pList->swap(index1, index2);
                 pList->print();
                 break;
             case '5':
                 cout << "\n\nВведите индекс: ";
                 cin >> index1;
+                if(cin.fail()){
+                    clearStream();
+                    cout << "\nНеверный ввод";
+                    break;
+                }
+                if(pList->getAt(index1) == nullptr){
+                    cout << "\nЭлемент не найден";
+                    break;
+                }
                 cout << "\nЭлемент: " << pList->getAt(index1)->data;
                 break;
             case '6':

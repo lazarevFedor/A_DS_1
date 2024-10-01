@@ -78,6 +78,7 @@ template<typename Type> void LinkedList<Type>::pushFront(Type data) {
         tail = ptr;
     }
     head = ptr;
+    len++;
 }
 
 
@@ -91,6 +92,7 @@ template<typename Type> void LinkedList<Type>::pushBack(Type data) {
         head = ptr;
     }
     tail = ptr;
+    len++;
 }
 
 
@@ -104,6 +106,7 @@ template<typename Type> void LinkedList<Type>::popFront() {
         tail = nullptr;
     delete head;
     head = ptr;
+    len--;
 }
 
 
@@ -117,6 +120,7 @@ template<typename Type> void LinkedList<Type>::popBack() {
         head = nullptr;
     delete tail;
     tail = ptr;
+    len--;
 }
 
 
@@ -133,6 +137,7 @@ template<typename Type> ListNode<Type> *LinkedList<Type>::getAt(short index) {
 
 
 template<typename Type> void LinkedList<Type>::insert(short int index, Type data) {
+    if(index < 0 || index > len) return;
     ListNode<Type>* right = getAt(index);
     if (right == nullptr){
         pushBack(data);
@@ -148,6 +153,7 @@ template<typename Type> void LinkedList<Type>::insert(short int index, Type data
     ptr->next = right;
     left->next = ptr;
     right->prev = ptr;
+    len++;
 }
 
 
@@ -169,6 +175,7 @@ template<typename Type> void LinkedList<Type>::erase(short index) {
     left->next = right;
     right->prev = left;
     delete ptr;
+    len--;
 }
 
 
@@ -218,6 +225,7 @@ template<typename Type> void LinkedList<Type>::swap(short index1, short index2) 
 
 
 template<typename Type> void LinkedList<Type>::print() {
+    if(len == 0) return;
     std::cout << "[ ";
     for (ListNode<Type>*ptr = head; ptr != nullptr; ptr = ptr->next){
         std::cout << ptr->data << " ";
