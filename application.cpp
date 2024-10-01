@@ -384,7 +384,10 @@ void application::stationApplication() {
                 cout << "\nВведите выражение: ";
                 clearStream();
                 input = station.getStr();
-                cout << "Выражение в обратной польской нотации: " << station.toRPN(input);
+                input = station.toRPN(input);
+                if(station.calculate(input)){
+                    cout << "Выражение в обратной польской нотации: " << input;
+                }
                 break;
             case '2':
                 return;

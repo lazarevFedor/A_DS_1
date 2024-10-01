@@ -30,6 +30,9 @@ int SortStation::priority(char c) {
 }
 
 
+
+
+
 std::string SortStation::toRPN(std::string &inputStr) {
     auto* pStack = new Stack<string>();
     string output;
@@ -98,4 +101,103 @@ std::string SortStation::toRPN(std::string &inputStr) {
     }
     delete pStack;
     return output;
+}
+
+bool SortStation::calculate(string &output) {
+    auto* pStack = new Stack<string>();
+    string curr;
+    double result = 0;
+    double variable = 0;
+    int strLen = output.length();
+
+    for(int i = 0; i < strLen; i++){
+        if(output[i] != ' '){
+            switch(priority(output[i])){
+                case -1:
+                    curr.push_back(output[i]);
+                    break;
+                case 1:
+                    case 2:
+                        if (pStack->head == pStack->tail){
+                            cout << "\nОшибка ввода строки! Недостаточно операндов.\n";
+                            return false;
+                        }
+                    if(!isdigit(pStack->head->data[0])){
+                        variable = 1;
+                    }
+                    else variable = stod(pStack->head->data);
+                    result = variable;
+                    pStack->popFront();
+                    if (output[i] == '/' && result == 0){
+                        cout << "\nДеление на ноль невозможно!\n";
+                        return false;
+                    }
+                    if(!isdigit(pStack->head->data[0])){
+                        variable = 1;
+                    }
+                    else variable = stod(pStack->head->data);
+                    result = operation(variable, result, output[i]);
+                    pStack->popFront();
+                    curr = to_string(result);
+                    pStack->pushFront(curr, -1);
+                    curr = "";
+                    break;
+                default:
+                    cout << "\nОшибка ввода строки.";
+                    return false;
+            }
+        }else{
+            if (!curr.empty()) {
+                if(curr == "sin"){
+                    if (pStack->head == nullptr){
+                        cout << "\nОшибка ввода строки! Недостаточно операндов.\n";
+                        return false;
+                    }
+                    if(!isdigit(pStack->head->data[0])){
+                        variable = 1;
+                    } else variable = stod(pStack->head->data);
+                    result = sin(variable);
+                    pStack->popFront();
+                    curr = to_string(result);
+                    pStack->pushFront(curr, -1);
+                }else if(curr == "cos"){
+                    if (pStack->head == nullptr){
+                        cout << "\nОшибка ввода строки! Недостаточно операндов.\n";
+                        return false;
+                    }
+                    if(!isdigit(pStack->head->data[0])){
+                        variable = 0;
+                    }else variable = stod(pStack->head->data);
+                    result = cos(variable);
+                    pStack->popFront();
+                    curr = to_string(result);
+                    pStack->pushFront(curr, -1);
+                }else{
+                    pStack->pushFront(curr, -1);
+                }
+                curr = "";
+            }
+        }
+    }
+    if (pStack->head != pStack->tail){
+        cout << "\nОшибка ввода! Недостаточно операций.\n";
+        return false;
+    }
+
+    return true;
+}
+
+double SortStation::operation(double a, double b, char c) {
+    switch (c){
+        case '+':
+            return a + b;
+        case '-':
+            return a - b;
+        case '*':
+            return a * b;
+        case '/':
+            return a / b;
+        default:
+            return 0;
+    }
 }

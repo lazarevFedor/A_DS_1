@@ -11,6 +11,10 @@ public:
 
     int priority(char c);
 
+    double operation(double a, double b, char c);
+
+    bool calculate(std::string &output);
+
     std::string toRPN(std::string &inputStr);
 };
 
