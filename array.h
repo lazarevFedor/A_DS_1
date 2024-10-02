@@ -3,6 +3,7 @@
 
 
 template<typename Type> class Array{
+public:
     Type* array;
     int currentSize = 0;
     int capacity = 0;
@@ -69,7 +70,7 @@ template<typename Type> bool Array<Type>::empty() {
 
 
 template<typename Type> void Array<Type>::insert(int index, Type data) {
-    if(index < 0 || index > currentSize) return;
+    if(index < 0 || index > capacity) return;
 
     if(index == 0) {
         this->pushFront(data);
@@ -81,17 +82,31 @@ template<typename Type> void Array<Type>::insert(int index, Type data) {
     }
 
     if (currentSize + 1 >= capacity){
-        capacity *= 1.5;
+        capacity *= 2;
     }
     Type* tmp = new Type[capacity];
-    for (int i = 0; i < index; i++) {
-        tmp[i] = array[i];
+    if(index > currentSize){
+        for (int i = 0; i < currentSize; i++) {
+            tmp[i] = array[i];
+        }
+        for(int i = currentSize; i < index; i++){
+            tmp[i] = 0;
+        }
+        tmp[index] = data;
+    }else{
+        for (int i = 0; i < index; i++) {
+            tmp[i] = array[i];
+        }
+        *(tmp + index) = data;
+        for (int i = index + 1; i <= currentSize; i++) {
+            tmp[i] = array[i-1];
+        }
     }
-    *(tmp + index) = data;
-    for (int i = index + 1; i <= currentSize; i++) {
-        tmp[i] = array[i-1];
+    if(index > currentSize){
+        currentSize = index + 1;
+    }else{
+        currentSize++;
     }
-    currentSize++;
     delete [] array;
     array = tmp;
 }
@@ -108,7 +123,7 @@ template<typename Type> void Array<Type>::print() {
 
 
 template<typename Type> void Array<Type>::pushFront(Type data) {
-    Type  *tmp = new Type[capacity*1.5];
+    Type  *tmp = new Type[capacity*2];
     if (currentSize + 1 < capacity){
         for (int i = currentSize; i > 0; i--){
             *(array + currentSize) = *(array + currentSize - 1);
@@ -116,7 +131,7 @@ template<typename Type> void Array<Type>::pushFront(Type data) {
         *(array) = data;
         currentSize++;
     } else{
-        capacity *= 1.5;
+        capacity *= 2;
         for (int i = 1; i <= currentSize; i++) {
             tmp[i] = array[i-1];
         }
@@ -129,12 +144,12 @@ template<typename Type> void Array<Type>::pushFront(Type data) {
 
 
 template<typename Type> void Array<Type>::pushBack(Type data) {
-    Type  *tmp = new Type[capacity*1.5];
+    Type  *tmp = new Type[capacity*2];
     if (currentSize + 1 < capacity){
         *(array + currentSize) = data;
         currentSize++;
     }else{
-        capacity *= 1.5;
+        capacity *= 2;
         for (int i = 0; i < currentSize; i++) {
             tmp[i] = array[i];
         }

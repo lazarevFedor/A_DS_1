@@ -59,7 +59,8 @@ inline void application::editMenu() {
             "3) Удалить элемент по индексу\n" <<
             "4) Обмен элементов\n" <<
             "5) Получить элемент по индексу\n" <<
-            "6) Назад\n--> ";
+            "6) Вывести структуру данных\n" <<
+            "7) Назад\n--> ";
 }
 
 
@@ -215,7 +216,9 @@ void application::arrayApplication() {
                     cout << "\nНеверный ввод";
                     break;
                 }
+                cout << "\n" <<pArray->capacity << "\n";
                 pArray->insert(index1, value);
+                cout << "\n" <<pArray->capacity << "\n";
                 pArray->print();
                 break;
             case '3':
@@ -262,6 +265,9 @@ void application::arrayApplication() {
                 cout << "\nЭлемент: " << *(pArray->getAt(index1));
                 break;
             case '6':
+                pArray->print();
+                break;
+            case '7':
                 delete pArray;
                 return;
             default:
@@ -359,6 +365,9 @@ void application::listApplication() {
                 cout << "\nЭлемент: " << pList->getAt(index1)->data;
                 break;
             case '6':
+                pList->print();
+                break;
+            case '7':
                 delete pList;
                 return;
             default:
@@ -374,6 +383,7 @@ void application::stationApplication() {
     SortStation station;
     string input;
     char choise;
+    bool errorFlag = false;
 
     while(true){
         cout << "1) Преобразовать выражение\n" <<
@@ -384,9 +394,15 @@ void application::stationApplication() {
                 cout << "\nВведите выражение: ";
                 clearStream();
                 input = station.getStr();
-                input = station.toRPN(input);
+                input = station.toRPN(input, errorFlag);
+                if(errorFlag == true || input.empty()){
+                    cout << "Неверный ввод выражения";
+                    break;
+                }
                 if(station.calculate(input)){
                     cout << "Выражение в обратной польской нотации: " << input;
+                }else{
+                    cout << "Неверный ввод выражения";
                 }
                 break;
             case '2':

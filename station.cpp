@@ -17,6 +17,8 @@ int SortStation::priority(char c) {
         case '*':
         case '/':
             return 2;
+        case '^':
+            return 3;
         case '(':
         case ')':
             return 0;
@@ -30,10 +32,7 @@ int SortStation::priority(char c) {
 }
 
 
-
-
-
-std::string SortStation::toRPN(std::string &inputStr) {
+std::string SortStation::toRPN(std::string &inputStr, bool &errorFlag) {
     auto* pStack = new Stack<string>();
     string output;
     string  current;
@@ -56,7 +55,12 @@ std::string SortStation::toRPN(std::string &inputStr) {
                     pStack->pushFront("(", 0);
                 }
                 else{
-                    while(pStack->head->data != "("){
+                    while(true){
+                        if(pStack->head == nullptr){
+                            errorFlag = true;
+                            return " ";
+                        }
+                        if (pStack->head->data == "(") break;
                         output += pStack->head->data;
                         output.push_back(' ');
                         pStack->popFront();
@@ -66,6 +70,7 @@ std::string SortStation::toRPN(std::string &inputStr) {
                 break;
             case 1:
             case 2:
+            case 3:
                 if(!current.empty()) {
                     output += current + " ";
                     current.clear();
@@ -103,6 +108,7 @@ std::string SortStation::toRPN(std::string &inputStr) {
     return output;
 }
 
+
 bool SortStation::calculate(string &output) {
     auto* pStack = new Stack<string>();
     string curr;
@@ -116,8 +122,11 @@ bool SortStation::calculate(string &output) {
                 case -1:
                     curr.push_back(output[i]);
                     break;
+                case 0:
+                    return false;
                 case 1:
                     case 2:
+                    case 3:
                         if (pStack->head == pStack->tail){
                             cout << "\nОшибка ввода строки! Недостаточно операндов.\n";
                             return false;
@@ -187,6 +196,7 @@ bool SortStation::calculate(string &output) {
     return true;
 }
 
+
 double SortStation::operation(double a, double b, char c) {
     switch (c){
         case '+':
@@ -197,6 +207,8 @@ double SortStation::operation(double a, double b, char c) {
             return a * b;
         case '/':
             return a / b;
+        case '^':
+            return pow(a, b);
         default:
             return 0;
     }

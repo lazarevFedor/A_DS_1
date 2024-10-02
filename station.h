@@ -15,7 +15,7 @@ public:
 
     bool calculate(std::string &output);
 
-    std::string toRPN(std::string &inputStr);
+    std::string toRPN(std::string &inputStr, bool &errorFlag);
 };
 
 
